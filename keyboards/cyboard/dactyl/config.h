@@ -13,6 +13,10 @@
 #define MATRIX_COL_PINS { GP9, GP26, GP22, GP20, GP29, GP4, GP5 }
 #define DIODE_DIRECTION ROW2COL
 
+#define ENCODERS_PAD_A { GP13 }
+#define ENCODERS_PAD_B { GP12 }
+#define ENCODER_RESOLUTION 4
+
 /* Split keyboard settings */
 #define SOFT_SERIAL_PIN GP0
 #define SELECT_SOFT_SERIAL_SPEED 2
