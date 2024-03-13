@@ -8,6 +8,6 @@
 #define CH_CFG_ST_FREQUENCY                 1000000
 #define CH_CFG_INTERVALS_SIZE               32
 #define CH_CFG_TIME_TYPES_SIZE              32
-#define CH_CFG_ST_TIMEDELTA                 20
+#define CH_CFG_ST_TIMEDELTA                 100
 
 #include_next <chconf.h>

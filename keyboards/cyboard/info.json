@@ -1,0 +1,78 @@
+{
+    "manufacturer": "Cyboard",
+    "maintainer": "@Cyboard-DigitalTailor",
+    "url": "https://cyboard.digital",
+    "usb": {
+        "vid": "0x4359",
+        "pid": "0x0000",
+        "device_version": "0.2.0"
+    },
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "diode_direction": "ROW2COL",
+    "matrix_pins": {
+        "rows": ["GP2", "GP3", "GP8", "GP4", "GP13", "GP9", "GP14"],
+        "cols": ["GP1", "GP10", "GP11", "GP12", "GP7", "GP6", "GP5", "GP19"]
+    },
+    "split": {
+        "enabled": true
+    },
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgb_matrix": true
+    },
+    "ws2812": {
+        "pin": "GP15",
+        "driver": "vendor"
+    },
+    "rgb_matrix": {
+        "driver": "ws2812",
+        "max_brightness": 120,
+        "animations": {
+            "alpha_mods": true,
+            "breathing": true,
+            "colorband_pinwheel_sat": true,
+            "colorband_pinwheel_val": true,
+            "colorband_sat": true,
+            "colorband_spiral_sat": true,
+            "colorband_spiral_val": true,
+            "colorband_val": true,
+            "cycle_all": true,
+            "cycle_left_right": true,
+            "cycle_out_in": true,
+            "cycle_out_in_dual": true,
+            "cycle_pinwheel": true,
+            "cycle_spiral": true,
+            "cycle_up_down": true,
+            "digital_rain": true,
+            "dual_beacon": true,
+            "gradient_left_right": true,
+            "gradient_up_down": true,
+            "hue_breathing": true,
+            "hue_pendulum": true,
+            "hue_wave": true,
+            "jellybean_raindrops": true,
+            "pixel_flow": true,
+            "pixel_fractal": true,
+            "pixel_rain": true,
+            "rainbow_beacon": true,
+            "rainbow_moving_chevron": true,
+            "rainbow_pinwheels": true,
+            "raindrops": true,
+            "solid_color": true,
+            "solid_reactive": true,
+            "solid_reactive_cross": true,
+            "solid_reactive_nexus": true,
+            "solid_reactive_simple": true,
+            "solid_reactive_wide": true,
+            "solid_splash": true,
+            "splash": true,
+            "typing_heatmap": true
+        }
+    }
+}
