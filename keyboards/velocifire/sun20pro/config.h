@@ -2,19 +2,12 @@
 
 #pragma once
 
-#include "config_common.h"
-
 #define VIAL_KEYBOARD_UID {0x97, 0x61, 0x7D, 0x2F, 0xA7, 0x5E, 0x42, 0x40}
 
 #define VIAL_UNLOCK_COMBO_ROWS { 0, 4 }
 #define VIAL_UNLOCK_COMBO_COLS { 0, 3 }
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID       0x0002
-#define PRODUCT_ID      0x0002
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Velocifire
-#define PRODUCT         Sun20pro
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -27,15 +20,12 @@
 #define ENCODERS_PAD_B { D7 }
 
 /* COL2ROW or ROW2COL */
-#define DIODE_DIRECTION COL2ROW
 
 /* number of backlight levels */
 #ifdef BACKLIGHT_PIN
 #   define BACKLIGHT_LEVELS 3
 #endif
 
-/* Set 0 if debouncing isn't needed */
-#define DEBOUNCE 5
 
 /* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
 #undef LOCKING_SUPPORT_ENABLE
@@ -43,27 +33,12 @@
 /* Locking resynchronize hack */
 #undef LOCKING_RESYNC_ENABLE
 
-/* key combination for command */
-#define IS_COMMAND() ( \
-	keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
-)
-
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 
-#define RGB_DI_PIN C7
-#ifdef RGB_DI_PIN
-#   define RGBLED_NUM 25
-#   define RGBLIGHT_HUE_STEP 8
-#   define RGBLIGHT_SAT_STEP 8
-#   define RGBLIGHT_VAL_STEP 8
-#   define RGBLIGHT_LIMIT_VAL 255 /* The maximum brightness level */
-#   define RGBLIGHT_SLEEP         /* If defined, the RGB lighting will be switched off when the host goes to sleep */
-/*== all animations enable ==*/
-#   define RGBLIGHT_ANIMATIONS
 // RGB Matrix
 #   ifdef RGB_MATRIX_ENABLE
-#       define DRIVER_LED_TOTAL RGBLED_NUM
+#       define RGB_MATRIX_LED_COUNT 25
 
 // RGB Matrix Animation modes. Explicitly enabled
 // For full list of effects, see:
@@ -113,5 +88,4 @@
 // #       define ENABLE_RGB_MATRIX_MULTISPLASH
 // #       define ENABLE_RGB_MATRIX_SOLID_SPLASH
 // #       define ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-#    endif
 #endif

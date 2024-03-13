@@ -1,1 +1,2 @@
-DEFAULT_FOLDER = velocifire/sun20pro
+EXTRAKEY_ENABLE = yes
+RGB_MATRIX_ENABLE = yes
