@@ -20,19 +20,29 @@
 
 #include "quantum.h"
 
-#ifdef POINTING_DEVICE_ENABLE
+#ifdef SPLIT_POINTING_ENABLE
 #    ifndef NO_CHARYBDIS_KEYCODES
 enum charybdis_keycodes {
-    POINTER_DEFAULT_DPI_FORWARD = QK_KB_0,
-    POINTER_DEFAULT_DPI_REVERSE,
-    POINTER_SNIPING_DPI_FORWARD,
-    POINTER_SNIPING_DPI_REVERSE,
-    SNIPING_MODE,
-    SNIPING_MODE_TOGGLE,
-    DRAGSCROLL_MODE,
-    DRAGSCROLL_MODE_TOGGLE,
+    LEFT_POINTER_DEFAULT_DPI_FORWARD = QK_KB_0,
+    LEFT_POINTER_DEFAULT_DPI_REVERSE,
+    LEFT_POINTER_SNIPING_DPI_FORWARD,
+    LEFT_POINTER_SNIPING_DPI_REVERSE,
+    LEFT_SNIPING_MODE,
+    LEFT_SNIPING_MODE_TOGGLE,
+    LEFT_DRAGSCROLL_MODE,
+    LEFT_DRAGSCROLL_MODE_TOGGLE,
+    RIGHT_POINTER_DEFAULT_DPI_FORWARD,
+    RIGHT_POINTER_DEFAULT_DPI_REVERSE,
+    RIGHT_POINTER_SNIPING_DPI_FORWARD,
+    RIGHT_POINTER_SNIPING_DPI_REVERSE,
+    RIGHT_SNIPING_MODE,
+    RIGHT_SNIPING_MODE_TOGGLE,
+    RIGHT_DRAGSCROLL_MODE,
+    RIGHT_DRAGSCROLL_MODE_TOGGLE,
 };
 
+
+//TODO: change these for left and right
 #        define DPI_MOD POINTER_DEFAULT_DPI_FORWARD
 #        define DPI_RMOD POINTER_DEFAULT_DPI_REVERSE
 #        define S_D_MOD POINTER_SNIPING_DPI_FORWARD
@@ -54,7 +64,7 @@ uint16_t charybdis_get_pointer_default_dpi(void);
  *
  * The new value is persisted in EEPROM.
  */
-void charybdis_cycle_pointer_default_dpi(bool forward);
+void charybdis_cycle_pointer_default_dpi(bool forward, bool is_left);
 
 /**
  * \brief Same as `charybdis_cycle_pointer_default_dpi`, but do not write to
@@ -63,7 +73,7 @@ void charybdis_cycle_pointer_default_dpi(bool forward);
  * This means that reseting the board will revert the value to the last
  * persisted one.
  */
-void charybdis_cycle_pointer_default_dpi_noeeprom(bool forward);
+//void charybdis_cycle_pointer_default_dpi_noeeprom(bool forward);
 
 /** \brief Return the current DPI value for the pointer's sniper-mode. */
 uint16_t charybdis_get_pointer_sniping_dpi(void);
@@ -76,7 +86,7 @@ uint16_t charybdis_get_pointer_sniping_dpi(void);
  *
  * The new value is persisted in EEPROM.
  */
-void charybdis_cycle_pointer_sniping_dpi(bool forward);
+void charybdis_cycle_pointer_sniping_dpi(bool forward, bool is_left);
 
 /**
  * \brief Same as `charybdis_cycle_pointer_sniping_dpi`, but do not write to
@@ -88,7 +98,7 @@ void charybdis_cycle_pointer_sniping_dpi(bool forward);
 void charybdis_cycle_pointer_sniping_dpi_noeeprom(bool forward);
 
 /** \brief Whether sniper-mode is enabled. */
-bool charybdis_get_pointer_sniping_enabled(void);
+bool charybdis_get_pointer_sniping_enabled(bool is_left);
 
 /**
  * \brief Enable/disable sniper mode.
@@ -96,10 +106,10 @@ bool charybdis_get_pointer_sniping_enabled(void);
  * When sniper mode is enabled the dpi is reduced to slow down the pointer for
  * more accurate movements.
  */
-void charybdis_set_pointer_sniping_enabled(bool enable);
+void charybdis_set_pointer_sniping_enabled(bool enable, bool is_left);
 
 /** \brief Whether drag-scroll is enabled. */
-bool charybdis_get_pointer_dragscroll_enabled(void);
+bool charybdis_get_pointer_dragscroll_enabled(bool is_left);
 
 /**
  * \brief Enable/disable drag-scroll mode.
@@ -107,5 +117,5 @@ bool charybdis_get_pointer_dragscroll_enabled(void);
  * When drag-scroll mode is enabled, horizontal and vertical pointer movements
  * are translated into horizontal and vertical scroll movements.
  */
-void charybdis_set_pointer_dragscroll_enabled(bool enable);
-#endif // POINTING_DEVICE_ENABLE
+void charybdis_set_pointer_dragscroll_enabled(bool enable, bool is_left);
+#endif // SPLIT_POINTING_ENABLE

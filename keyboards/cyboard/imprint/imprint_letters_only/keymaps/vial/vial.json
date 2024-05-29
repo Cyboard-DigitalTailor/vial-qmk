@@ -3,6 +3,72 @@
     "vendorId": "0xFEED",
     "productId": "0x0000",
     "lighting": "vialrgb",
+    "customKeycodes": [
+        {"name": "L_DPI_INC",
+         "title": "Increase left trackball sensitivity",
+         "shortName": "LEFT_POINTER_DEFAULT_DPI_FORWARD"
+        },
+        {"name": "L_DPI_DEC",
+         "title": "Decrease left trackball sensitivity",
+         "shortName": "LEFT_POINTER_DEFAULT_DPI_REVERSE"
+        },
+        {"name": "L_SNP_INC",
+         "title": "Increase left trackball sensitivity when in sniping mode",
+         "shortName": "LEFT_POINTER_SNIPING_DPI_FORWARD"
+        },
+        {"name": "L_SNP_DEC",
+         "title": "Decrease left trackball sensitivity when in sniping mode",
+         "shortName": "LEFT_POINTER_SNIPING_DPI_REVERSE"
+        },
+        {"name": "L_Snipe",
+         "title": "Reduce left trackball sensitivity while held",
+         "shortName": "LEFT_SNIPING_MODE"
+        },
+        {"name": "L_SNP_TOG",
+         "title": "Toggle left trackball between normal and sniping mode",
+         "shortName": "LEFT_SNIPING_MODE_TOGGLE"
+        },
+        {"name": "L_DragScroll",
+         "title": "Make left trackball behave as a scroll wheel while held",
+         "shortName": "LEFT_DRAGSCROLL_MODE"
+        },
+        {"name": "L_DragScroll_TOG",
+         "title": "Toggle left trackball between normal and drag scroll mode",
+         "shortName": "LEFT_DRAGSCROLL_MODE_TOGGLE"
+        },
+        {"name": "R_DPI_INC",
+         "title": "Increase trackball sensitivity on right hand",
+         "shortName": "RIGHT_POINTER_DEFAULT_DPI_FORWARD"
+        },
+        {"name": "R_DPI_DEC",
+         "title": "Decrease trackball sensitivity on right hand",
+         "shortName": "RIGHT_POINTER_DEFAULT_DPI_REVERSE"
+        },
+        {"name": "R_SNP_INC",
+         "title": "Increase right trackball sensitivity when in sniping mode",
+         "shortName": "RIGHT_POINTER_SNIPING_DPI_FORWARD"
+        },
+        {"name": "R_SNP_DEC",
+         "title": "Decrease right trackball sensitivity when in sniping mode",
+         "shortName": "RIGHT_POINTER_SNIPING_DPI_REVERSE"
+        },
+        {"name": "R_Snipe",
+         "title": "Reduce right trackball sensitivity while held",
+         "shortName": "RIGHT_SNIPING_MODE"
+        },
+        {"name": "R_SNP_TOG",
+         "title": "Toggle right trackball between normal and sniping mode",
+         "shortName": "RIGHT_SNIPING_MODE_TOGGLE"
+        },
+        {"name": "R_DragScroll",
+         "title": "Make right trackball behave as a scroll wheel while held",
+         "shortName": "RIGHT_DRAGSCROLL_MODE"
+        },
+        {"name": "R_DragScroll_TOG",
+         "title": "Toggle right trackball between normal and drag scroll mode",
+         "shortName": "RIGHT_DRAGSCROLL_MODE_TOGGLE"
+        }
+    ],
     "matrix": {
         "rows": 14,
         "cols": 8

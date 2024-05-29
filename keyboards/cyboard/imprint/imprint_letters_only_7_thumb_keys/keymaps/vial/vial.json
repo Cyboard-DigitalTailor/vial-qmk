@@ -1,0 +1,175 @@
+{
+    "name": "Imprint",
+    "vendorId": "0xFEED",
+    "productId": "0x0000",
+    "lighting": "vialrgb",
+    "customKeycodes": [
+        {"name": "L_DPI_INC",
+         "title": "Increase left trackball sensitivity",
+         "shortName": "LEFT_POINTER_DEFAULT_DPI_FORWARD"
+        },
+        {"name": "L_DPI_DEC",
+         "title": "Decrease left trackball sensitivity",
+         "shortName": "LEFT_POINTER_DEFAULT_DPI_REVERSE"
+        },
+        {"name": "L_SNP_INC",
+         "title": "Increase left trackball sensitivity when in sniping mode",
+         "shortName": "LEFT_POINTER_SNIPING_DPI_FORWARD"
+        },
+        {"name": "L_SNP_DEC",
+         "title": "Decrease left trackball sensitivity when in sniping mode",
+         "shortName": "LEFT_POINTER_SNIPING_DPI_REVERSE"
+        },
+        {"name": "L_Snipe",
+         "title": "Reduce left trackball sensitivity while held",
+         "shortName": "LEFT_SNIPING_MODE"
+        },
+        {"name": "L_SNP_TOG",
+         "title": "Toggle left trackball between normal and sniping mode",
+         "shortName": "LEFT_SNIPING_MODE_TOGGLE"
+        },
+        {"name": "L_DragScroll",
+         "title": "Make left trackball behave as a scroll wheel while held",
+         "shortName": "LEFT_DRAGSCROLL_MODE"
+        },
+        {"name": "L_DragScroll_TOG",
+         "title": "Toggle left trackball between normal and drag scroll mode",
+         "shortName": "LEFT_DRAGSCROLL_MODE_TOGGLE"
+        },
+        {"name": "R_DPI_INC",
+         "title": "Increase trackball sensitivity on right hand",
+         "shortName": "RIGHT_POINTER_DEFAULT_DPI_FORWARD"
+        },
+        {"name": "R_DPI_DEC",
+         "title": "Decrease trackball sensitivity on right hand",
+         "shortName": "RIGHT_POINTER_DEFAULT_DPI_REVERSE"
+        },
+        {"name": "R_SNP_INC",
+         "title": "Increase right trackball sensitivity when in sniping mode",
+         "shortName": "RIGHT_POINTER_SNIPING_DPI_FORWARD"
+        },
+        {"name": "R_SNP_DEC",
+         "title": "Decrease right trackball sensitivity when in sniping mode",
+         "shortName": "RIGHT_POINTER_SNIPING_DPI_REVERSE"
+        },
+        {"name": "R_Snipe",
+         "title": "Reduce right trackball sensitivity while held",
+         "shortName": "RIGHT_SNIPING_MODE"
+        },
+        {"name": "R_SNP_TOG",
+         "title": "Toggle right trackball between normal and sniping mode",
+         "shortName": "RIGHT_SNIPING_MODE_TOGGLE"
+        },
+        {"name": "R_DragScroll",
+         "title": "Make right trackball behave as a scroll wheel while held",
+         "shortName": "RIGHT_DRAGSCROLL_MODE"
+        },
+        {"name": "R_DragScroll_TOG",
+         "title": "Toggle right trackball between normal and drag scroll mode",
+         "shortName": "RIGHT_DRAGSCROLL_MODE_TOGGLE"
+        }
+    ],
+    "matrix": {
+        "rows": 14,
+        "cols": 8
+    },
+    "layouts": {
+        "keymap":
+[
+    [
+        "4,5",
+        "4,4",
+        "4,3",
+        "4,2",
+        "4,1",
+        "4,0",
+        {
+          "x": 5.5
+        },
+        "11,0",
+        "11,1",
+        "11,2",
+        "11,3",
+        "11,4",
+        "11,5"
+      ],
+      [
+        "3,5",
+        "3,4",
+        "3,3",
+        "3,2",
+        "3,1",
+        "3,0",
+        {
+          "x": 5.5
+        },
+        "10,0",
+        "10,1",
+        "10,2",
+        "10,3",
+        "10,4",
+        "10,5"
+      ],
+      [
+        "2,5",
+        "2,4",
+        "2,3",
+        "2,2",
+        "2,1",
+        "2,0",
+        {
+          "x": 5.5
+        },
+        "9,0",
+        "9,1",
+        "9,2",
+        "9,3",
+        "9,4",
+        "9,5"
+      ],
+      [
+        {
+          "x": 2
+        },
+        "1,3",
+        "1,2",
+        {
+          "x": 9.5
+        },
+        "8,2",
+        "8,3"
+      ],
+      [
+        {
+          "y": -0.5,
+          "x": 5.5
+        },
+        "0,3",
+        "0,2",
+        "0,1",
+        {
+          "x": 0.5
+        },
+        "7,1",
+        "7,2",
+        "7,3"
+      ],
+      [
+        {
+          "x": 4.5
+        },
+        "0,7",
+        "0,6",
+        "0,5",
+        "0,4",
+        {
+          "x": 0.5
+        },
+        "7,4",
+        "7,5",
+        "7,6",
+        "7,7"
+      ]
+]
+    }
+}

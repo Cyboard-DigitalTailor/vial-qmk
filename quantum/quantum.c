@@ -15,7 +15,6 @@
  */
 
 #include "quantum.h"
-#include "magic.h"
 #include "qmk_settings.h"
 
 #if defined(BACKLIGHT_ENABLE) || defined(LED_MATRIX_ENABLE)

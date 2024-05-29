@@ -16,6 +16,8 @@ where `{MODEL}` can be `imprint` or `dactyl`
 
 ## Flashing
 
+Note: If you've already made changes with Vial, open the Vial app first, and save your layout `File -> Save Current Layout (Ctrl + S)`.  Then you can load it after you complete the firmware update.
+
 To flash the firmware to your Cyboard,
 1. Enter the bootloader by double-tapping the reset button on the back of the board.
 2. A USB device called `RPI-RP2` should appear on your computer.
