@@ -5,7 +5,11 @@
 #pragma once
 
 /* Split keyboard settings */
+
+#ifndef SERIAL_USART_TX_PIN
 #define SERIAL_USART_TX_PIN GP28
+#endif
+
 #define SPLIT_HAND_PIN GP0
 
 /* RGB settings */
@@ -27,7 +31,9 @@
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP17
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 1000U
 
+#ifndef USB_VBUS_PIN
 #define USB_VBUS_PIN GP27
+#endif
 
 /* Vial set up */
 #define VIAL_KEYBOARD_UID {0xC4, 0xCC, 0xB4, 0x76, 0x30, 0x16, 0xFC, 0x70}
