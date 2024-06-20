@@ -8,12 +8,15 @@ See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_to
 
 ## Building Firmware
 
-Various sizes and thumb-cluster styles are supported as keymaps. To build the firmware, use the command:
-`make cyboard/{MODEL}/{THUMB STYLE}_{ROWS}{VERSION}:vial`
-where `{MODEL}` can be `imprint` or `dactyl`
-, `{THUMB STYLE}` can be `imprint`, `manuform`, `dual_arcs`, or `single_arc`
-, `{ROWS}` can be `function_row`, `number_row`, or `letters_only`
-, and `{VERSION}` is for supporting older models that used RJ-12 (telephone) cables for the split interconnect.  It can be omitted if your board uses USB-C for the split interconnect, or `/rj12` if your board uses RJ-12.
+Various sizes and thumb-cluster styles are supported as keymaps. To build the firmware, use the command:  
+`make cyboard/{MODEL}/{THUMB STYLE}_{ROWS}{VERSION}:vial`  
+where `{MODEL}` can be `imprint` or `dactyl`,  
+`{THUMB STYLE}` can be `imprint`, `manuform`, `dual_arcs`, or `single_arc`,  
+`{ROWS}` can be `function_row`, `number_row`, or `letters_only`,  
+and `{VERSION}` is for supporting boards that use RJ-12 (telephone) cables for the split interconnect.  `{VERSION}` can be omitted if your board uses USB-C, or `/rj12` if your board uses RJ-12.  
+
+Here's an example of the firmware build command for a standard Imprint with a function row and USB-C interconnect:  
+`make cyboard/imprint/imprint_function_row:vial`
 
 ## Flashing
 
