@@ -244,7 +244,7 @@ static void pointing_device_task_charybdis(report_mouse_t* mouse_report, bool is
 report_mouse_t pointing_device_task_combined_kb(report_mouse_t left_report, report_mouse_t right_report) {
         pointing_device_task_charybdis(&left_report, true);
         pointing_device_task_charybdis(&right_report, false);
-    return pointing_device_combine_reports(left_report, right_report);
+    return pointing_device_task_combined_user(left_report, right_report);
 }
 
 #    if defined(POINTING_DEVICE_ENABLE) && !defined(NO_CHARYBDIS_KEYCODES)
