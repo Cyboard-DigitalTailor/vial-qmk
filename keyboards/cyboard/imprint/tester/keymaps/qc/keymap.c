@@ -185,7 +185,6 @@ static int32_t  track_net_dx, track_net_dy;
 // Per-bin snapshots / coherence / reversal state.
 static uint32_t mon_last_path;
 static int32_t  mon_last_net_dx, mon_last_net_dy;
-static uint32_t mon_start_path;
 static uint32_t mon_net_sum;
 static int32_t  mon_prev_ndx, mon_prev_ndy;
 static uint16_t mon_reversals, mon_dir_pairs;
@@ -213,7 +212,6 @@ static void qc_mon_start(uint16_t secs) {
 
     track_path = 0; track_net_dx = 0; track_net_dy = 0;
     mon_last_path = 0; mon_last_net_dx = 0; mon_last_net_dy = 0;
-    mon_start_path = 0;
     mon_net_sum = 0;
     mon_prev_ndx = 0; mon_prev_ndy = 0;
     mon_reversals = 0; mon_dir_pairs = 0;
@@ -321,7 +319,7 @@ static void qc_mon_finish(void) {
     int32_t expected = (int32_t)mon_bins * QC_BIN_MS;
     int32_t skew_pct = expected ? ((elapsed - expected) * 100 / expected) : 0;
 
-    uint32_t total_counts = track_path - mon_start_path;
+    uint32_t total_counts = track_path;
     uint32_t coh_pct = total_counts ? (mon_net_sum * 100u / total_counts) : 0;
     if (coh_pct > 100u) {
         coh_pct = 100u;
@@ -416,6 +414,9 @@ static void qc_dump(void) {
     wait_ms(1);
     qc_surface_t s;
     qc_read_surface(&s);
+    if (s.shutter > QC_SHUTTER_MAX) {
+        pass = false;
+    }
 
     qc_printf("[%s] dump: product_id=0x%02X (expect 0x%02X) inv=0x%02X (expect 0x%02X) "
               "rev=0x%02X srom=0x%02X\r\n",

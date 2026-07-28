@@ -272,7 +272,13 @@ def wait_uf2_drive_gone(drive, timeout=60):
 def flash_uf2(uf2_path, drive):
     dest = os.path.join(drive, os.path.basename(uf2_path))
     print(f"  copying {os.path.basename(uf2_path)} → {drive} …")
-    shutil.copyfile(uf2_path, dest)
+    try:
+        shutil.copyfile(uf2_path, dest)
+    except OSError as e:
+        # RP2040's bootloader only reboots on a complete image, so a failed
+        # copy leaves the board safely in DFU — report and let the caller retry.
+        print(f"  copy failed: {e}")
+        return False
     try:
         fd = os.open(dest, os.O_RDONLY)
         os.fsync(fd)
@@ -280,6 +286,7 @@ def flash_uf2(uf2_path, drive):
     except OSError:
         pass
     os.sync()
+    return True
 
 
 def request_dfu(port):
@@ -362,8 +369,10 @@ def flash_test_firmware(uf2, forced_drive):
         print("  Gave up waiting for the bootloader drive. Is the board plugged in?")
         return None
     print(f"  bootloader drive: {drive}")
-    flash_uf2(uf2, drive)
-    wait_uf2_drive_gone(drive)
+    if not flash_uf2(uf2, drive):
+        return None
+    if not wait_uf2_drive_gone(drive):
+        print("  bootloader drive didn't disappear; the flash may not have taken.")
     print("  flashed; waiting for the board to reboot…")
     port = wait_for_serial_port(30)
     if not port:
