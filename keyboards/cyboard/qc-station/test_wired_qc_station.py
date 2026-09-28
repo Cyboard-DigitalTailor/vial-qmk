@@ -147,6 +147,89 @@ def test_verdict_ship_gate_stricter(monkeypatch):
     assert qc.verdict(_res(slow_bins=1, active_bins=200)) == "MARGINAL (dispersion)"
 
 
+def test_verdict_p10_med_demotes_good(monkeypatch):
+    # The p10/med dispersion branch (bin_p10 < P10_MED_FLAG * bin_med) is a
+    # separate demotion path from the slow-fraction branch; pin it directly.
+    monkeypatch.setattr(qc, "SHIP_GATE", False)
+    # med=45, P10_MED_FLAG=0.4 -> cut at 18; p10=17 trips it with slow=0.
+    assert qc.verdict(_res(slow_bins=0, active_bins=200,
+                           bin_med=45, bin_p10=17)) == "MARGINAL (dispersion)"
+    # p10=19 clears the default cut.
+    assert qc.verdict(_res(slow_bins=0, active_bins=200,
+                           bin_med=45, bin_p10=19)) == "GOOD"
+
+
+def test_verdict_ship_gate_p10_med_branch(monkeypatch):
+    # p10=30 clears the default 0.4*45=18 cut but trips ship-gate's 0.7*45=31.5.
+    r = dict(slow_bins=0, active_bins=200, bin_med=45, bin_p10=30)
+    monkeypatch.setattr(qc, "SHIP_GATE", False)
+    assert qc.verdict(_res(**r)) == "GOOD"
+    monkeypatch.setattr(qc, "SHIP_GATE", True)
+    assert qc.verdict(_res(**r)) == "MARGINAL (dispersion)"
+
+
+# --- csv_safe: spreadsheet formula-injection guard ---------------------------
+@pytest.mark.parametrize("raw,expected", [
+    ("=cmd()", "'=cmd()"),
+    ("+1", "'+1"),
+    ("-2 counts", "'-2 counts"),
+    ("@ref", "'@ref"),
+    ("normal note", "normal note"),
+    ("", ""),
+    (42, 42),       # numeric columns pass through untouched
+])
+def test_csv_safe(raw, expected):
+    assert qc.csv_safe(raw) == expected
+
+
+# --- run_mon: the trailing skew/surface lines must not be dropped ------------
+class _BurstSerial:
+    """Delivers one scripted burst on the first read after `qc mon` is sent.
+
+    Models the failure the blocking fix targets: the firmware's three result
+    lines (consistency / timing skew / surface) arriving in a single ser.read().
+    """
+    def __init__(self, burst):
+        self._burst = burst
+        self._armed = False
+        self._sent = False
+
+    @property
+    def in_waiting(self):
+        return len(self._burst) if (self._armed and not self._sent) else 0
+
+    def read(self, _n):
+        if self._armed and not self._sent:
+            self._sent = True
+            return self._burst
+        return b""
+
+    def write(self, data):
+        if b"qc mon" in data:
+            self._armed = True
+
+    def flush(self):
+        pass
+
+
+def test_run_mon_captures_skew_and_surface_in_single_read(monkeypatch):
+    # No real waiting: collapse the countdown / grace sleeps.
+    monkeypatch.setattr(qc.time, "sleep", lambda *_a, **_k: None)
+    burst = (
+        FULL_LINE + "\r\n"
+        + "[trackball_left@0] timing skew +15% (mon slower than wall clock)\r\n"
+        + "[trackball_left@0] surface(rolling): squal 78/82/90 shutter 30/35/41 "
+          "pix 0/88/109 lift 3% (48 samples)\r\n"
+    ).encode()
+    res = qc.run_mon(_BurstSerial(burst), duration=1, idx=0)
+    assert res is not None
+    # Pre-fix these were dropped (skew None, blank surface) -> a false-pass.
+    assert res["skew_pct"] == 15
+    assert res["squal_avg"] == 82
+    assert res["lift_pct"] == 3
+    assert "SUSPECT" in qc.verdict(res)   # the skew flag reaches the verdict
+
+
 # --- resolve_log_path --------------------------------------------------------
 def test_resolve_log_path_new_file(tmp_path):
     p = str(tmp_path / "runs.csv")

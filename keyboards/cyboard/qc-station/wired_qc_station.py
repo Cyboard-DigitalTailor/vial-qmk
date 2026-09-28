@@ -487,13 +487,28 @@ def run_mon(ser, duration, idx):
     drain(ser, 0.15)
     send(ser, f"qc mon {duration}")
 
-    deadline = time.time() + duration + 6
+    # The firmware emits `consistency:` → `timing skew` → `surface(rolling):`
+    # back-to-back in one qc_mon_finish; a heavily-skewed long run can push the
+    # finish past a fixed margin, so scale the wait with the window.
+    grace_margin = max(6, int(duration * 0.3) + 4)
+    deadline = time.time() + duration + grace_margin
     started = time.time()
     result = None
     skew = None
     surface_stats = None
     buf = b""
     shown = None
+
+    def scan_extra(text):
+        """Fold a trailing skew / surface line into the captured result."""
+        nonlocal skew, surface_stats
+        ms2 = RE_SKEW.search(text)
+        if ms2:
+            skew = int(ms2.group(1))
+        sf2 = parse_surface(text)
+        if sf2:
+            surface_stats = sf2
+
     while time.time() < deadline and result is None:
         left = max(0, duration - int(time.time() - started))
         if left != shown:
@@ -533,14 +548,18 @@ def run_mon(ser, duration, idx):
                     "slow_bins": int(m.group(12)) if m.group(12) else "",
                     "active_bins": int(m.group(13)) if m.group(13) else "",
                 }
-                # grace read for the trailing skew warning + surface line
+                # The skew + surface lines trail the consistency line by sub-ms;
+                # the whole burst can land in one ser.read(), leaving them already
+                # in `buf` here. Scan those complete lines FIRST (else a run the
+                # firmware flagged with `timing skew` logs with no SUSPECT suffix
+                # and blank surface columns — a false-pass on the gate), then do a
+                # grace read from the port in case they're still in flight.
+                while b"\n" in buf:
+                    xraw, buf = buf.split(b"\n", 1)
+                    scan_extra(RE_ANSI.sub(
+                        "", xraw.decode(errors="replace").rstrip("\r")))
                 for extra in read_lines_until(ser, time.time() + 0.8):
-                    ms2 = RE_SKEW.search(extra)
-                    if ms2:
-                        skew = int(ms2.group(1))
-                    sf2 = parse_surface(extra)
-                    if sf2:
-                        surface_stats = sf2
+                    scan_extra(extra)
                 break
 
     sys.stdout.write("\r" + " " * 44 + "\r")
@@ -636,8 +655,21 @@ CSV_FIELDS = [
 ]
 
 
+def csv_safe(val):
+    """Neutralize spreadsheet formula injection in free-text fields.
+
+    A note or tester name like `=cmd(...)` is a live formula when the CSV is
+    opened in Excel/LibreOffice; prefix a leading formula trigger with `'` so it
+    stays inert text. Only touches strings — numeric columns pass through.
+    """
+    if isinstance(val, str) and val[:1] in ("=", "+", "-", "@", "\t", "\r"):
+        return "'" + val
+    return val
+
+
 def append_log(path, row):
     new = not os.path.exists(path) or os.path.getsize(path) == 0
+    row = {k: csv_safe(v) for k, v in row.items()}
     with open(path, "a", newline="") as f:
         w = csv.DictWriter(f, fieldnames=CSV_FIELDS)
         if new:

@@ -523,7 +523,16 @@ static void qc_dispatch(char *line) {
             qc_printf("[%s] a measurement is running; set cpi after it\r\n",
                       qc_sensor_name());
         } else if (arg && *arg) {
-            pmw33xx_set_cpi(QC_SENSOR, (uint16_t)atoi(arg));
+            // The help promises 100-12000 (step 100); an out-of-range or
+            // non-numeric arg (atoi -> 0) would set a bogus CPI that silently
+            // rescales every later `path` count, so validate and round here.
+            int req = atoi(arg);
+            if (req < 100 || req > 12000) {
+                qc_printf("[%s] cpi must be 100-12000; ignoring '%s'\r\n",
+                          qc_sensor_name(), arg);
+            } else {
+                pmw33xx_set_cpi(QC_SENSOR, (uint16_t)(((req + 50) / 100) * 100));
+            }
         }
         qc_printf("[%s] cpi=%u\r\n", qc_sensor_name(), pmw33xx_get_cpi(QC_SENSOR));
     } else if (strcmp(verb, "id") == 0) {
@@ -581,8 +590,10 @@ void housekeeping_task_user(void) {
 
     // Motion is sampled in get_report (~1 ms); here we only close out each
     // 25 ms bin and finish the run. Both run in the main loop, so the shared
-    // accumulators need no locking.
-    if (mon_active && timer_elapsed32(mon_bin_start) >= QC_BIN_MS) {
+    // accumulators need no locking. A `while` (not `if`) catches up every bin a
+    // stalled main loop skipped, instead of smearing them into one bin —
+    // qc_mon_finish() clears mon_active, so the loop still exits on the last bin.
+    while (mon_active && timer_elapsed32(mon_bin_start) >= QC_BIN_MS) {
         mon_bin_start += QC_BIN_MS;
         qc_mon_bin();
         if (--mon_bins_left == 0) {

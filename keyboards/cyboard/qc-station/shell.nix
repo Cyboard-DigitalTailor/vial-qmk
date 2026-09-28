@@ -6,7 +6,7 @@
 pkgs.mkShell {
   name = "cyboard-wired-qc-station";
   buildInputs = [
-    (pkgs.python3.withPackages (ps: [ ps.pyserial ]))
+    (pkgs.python3.withPackages (ps: [ ps.pyserial ps.pytest ]))
     pkgs.udisks   # auto-mount the RPI-RP2 bootloader drive during auto-flash
   ];
 }
