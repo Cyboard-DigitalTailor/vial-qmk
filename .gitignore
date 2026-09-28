@@ -116,3 +116,6 @@ user_song_list.h
 compile_commands.json
 .clangd/
 .cache/
+
+# Cyboard wired QC station run logs (written to cwd; keep operator logs local)
+wired-qc-log*.csv
