@@ -31,7 +31,6 @@
 #define USB_VBUS_PIN GP27
 
 /* Vial set up */
-#define VIAL_KEYBOARD_UID {0xC4, 0xCC, 0xB4, 0x76, 0x30, 0x16, 0xFC, 0x70}
 
 #define VIAL_UNLOCK_COMBO_ROWS { 10, 10 }
 #define VIAL_UNLOCK_COMBO_COLS { 3, 4 }
