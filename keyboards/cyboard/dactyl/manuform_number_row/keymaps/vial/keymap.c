@@ -96,3 +96,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                             _______, _______, _______,         _______, _______, _______
     )
 };
+
+/* ===== BEGIN RGB LED index reference (auto-generated) =====
+ *
+ * Per-key RGB LED indices for this board, generated from
+ * keyboards/cyboard/dactyl/manuform_number_row/info.json (rgb_matrix.layout).
+ * Each number is the global LED index of the key at that physical
+ * position in LAYOUT_manuform_num; '--' means that key has no per-key LED.
+ * Split halves: left half = LED indices 0-33, right half = LED indices 34-67 (rgb_matrix.split_count [34, 34]).
+ * Use the index with rgb_matrix_set_color(index, r, g, b).
+ *
+ *         26   21   16   11    6    2      36   40   45   50   55   60
+ *         27   22   17   12    7    3      37   41   46   51   56   61
+ *         23   18   13    8    4    0      34   38   42   47   52   57
+ *         24   19   14    9    5    1      35   39   43   48   53   58
+ *         25   20   15   10   31   28   29      63   62   65   44   49   54   59
+ *         32   33   30      64   67   66
+ *
+ * Example - light one key (e.g. Caps Lock) red while the lock is on:
+ *
+ *   #define CAPS_LED_INDEX 5 // Replace with your key's LED index above
+ *
+ *   bool rgb_matrix_indicators_user(void) {
+ *       rgb_matrix_set_color(
+ *           CAPS_LED_INDEX,
+ *           host_keyboard_led_state().caps_lock ? 255 : 0,
+ *           0,
+ *           0
+ *       );
+ *       return true;
+ *   }
+ *
+ * ===== END RGB LED index reference ===== */
