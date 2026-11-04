@@ -107,3 +107,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, _______, _______,         _______, _______, _______, _______
     )
 };
+
+/* ===== BEGIN RGB LED index reference (auto-generated) =====
+ *
+ * Per-key RGB LED indices for this board, generated from
+ * keyboards/cyboard/imprint/custom/imprint_function_row_2key_bottom_row_7key_thumb_extra_col_left/info.json (rgb_matrix.layout).
+ * Each number is the global LED index of the key at that physical
+ * position in LAYOUT_fun_custom; '--' means that key has no per-key LED.
+ * Split halves: left half = LED indices 0-42, right half = LED indices 43-81 (rgb_matrix.split_count [43, 39]).
+ * Use the index with rgb_matrix_set_color(index, r, g, b).
+ *
+ *         33   28   23   17   11    6    2      45   50   56   62   67   72
+ *         34   29   24   18   12    7    3      46   51   57   63   68   73
+ *         35   30   25   19   13    8    0      47   52   58   64   69   74
+ *         31   26   20   14    9    4    1      43   48   53   59   65   70
+ *         32   27   21   15   10    5      44   49   54   60   66   71
+ *         22   16   36   37   38      77   76   75   55   61
+ *         39   40   41   42      81   80   79   78
+ *
+ * Example - light one key (e.g. Caps Lock) red while the lock is on:
+ *
+ *   #define CAPS_LED_INDEX 5 // Replace with your key's LED index above
+ *
+ *   bool rgb_matrix_indicators_user(void) {
+ *       rgb_matrix_set_color(
+ *           CAPS_LED_INDEX,
+ *           host_keyboard_led_state().caps_lock ? 255 : 0,
+ *           0,
+ *           0
+ *       );
+ *       return true;
+ *   }
+ *
+ * ===== END RGB LED index reference ===== */

@@ -143,3 +143,37 @@ report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, re
     left_report.buttons |= right_report.buttons;
     return left_report;
 }
+
+/* ===== BEGIN RGB LED index reference (auto-generated) =====
+ *
+ * Per-key RGB LED indices for this board, generated from
+ * keyboards/cyboard/imprint/tester/info.json (rgb_matrix.layout).
+ * Each number is the global LED index of the key at that physical
+ * position in LAYOUT_tester; '--' means that key has no per-key LED.
+ * Split halves: left half = LED indices 0-55, right half = LED indices 56-111 (rgb_matrix.split_count [56, 56]).
+ * Use the index with rgb_matrix_set_color(index, r, g, b).
+ *
+ *         45   39   33   27   21   15    9    3      59   65   71   77   83   89   95  101
+ *         46   40   34   28   22   16   10    4      60   66   72   78   84   90   96  102
+ *         47   41   35   29   23   17   11    5      61   67   73   79   85   91   97  103
+ *         42   36   30   24   18   12    6    0      56   62   68   74   80   86   92   98
+ *         43   37   31   25   19   13    7    1      57   63   69   75   81   87   93   99
+ *         44   38   32   26   20   14    8    2      48   49   50   51  107  106  105  104
+ *         58   64   70   76      82   88   94  100
+ *         52   53   54   55     111  110  109  108
+ *
+ * Example - light one key (e.g. Caps Lock) red while the lock is on:
+ *
+ *   #define CAPS_LED_INDEX 5 // Replace with your key's LED index above
+ *
+ *   bool rgb_matrix_indicators_user(void) {
+ *       rgb_matrix_set_color(
+ *           CAPS_LED_INDEX,
+ *           host_keyboard_led_state().caps_lock ? 255 : 0,
+ *           0,
+ *           0
+ *       );
+ *       return true;
+ *   }
+ *
+ * ===== END RGB LED index reference ===== */
